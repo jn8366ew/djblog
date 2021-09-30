@@ -1,4 +1,4 @@
-# Django blog
+# Django blog, 현재 작성중입니다. 
 
 ## Description 
 * A personal blog implemented by Django
@@ -19,7 +19,6 @@
 
 </br></br>
 
-## Site Demo
 
 ### 1.Main page 
 
@@ -45,12 +44,6 @@
 
 </br>
 
-### 7.Profile dashboard
 
-</br>
-
-### 8.Update profile
-
-</br>
 
 
