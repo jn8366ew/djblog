@@ -1,0 +1,125 @@
+1.
+
+TypeError at /bookmark/
+as_view() takes 1 positional argument but 2 were given
+Request Method:	GET
+Request URL:	http://127.0.0.1:8000/bookmark/
+Django Version:	3.1.7
+Exception Type:	TypeError
+Exception Value:	
+as_view() takes 1 positional argument but 2 were given
+Exception Location:	C:\Users\trion\OneDrive\Desktop\PythonWeb\venv\lib\site-packages\django\core\handlers\base.py, line 181, in _get_response
+Python Executable:	C:\Users\trion\OneDrive\Desktop\PythonWeb\venv\Scripts\python.exe
+Python Version:	3.9.2
+Python Path:	
+['C:\\Users\\trion\\OneDrive\\Desktop\\PythonWeb\\mysite',
+ 'C:\\Users\\trion\\OneDrive\\Desktop\\PythonWeb',
+ 'C:\\Users\\trion\\AppData\\Local\\Programs\\Python\\Python39\\python39.zip',
+ 'C:\\Users\\trion\\AppData\\Local\\Programs\\Python\\Python39\\DLLs',
+ 'C:\\Users\\trion\\AppData\\Local\\Programs\\Python\\Python39\\lib',
+ 'C:\\Users\\trion\\AppData\\Local\\Programs\\Python\\Python39',
+ 'C:\\Users\\trion\\OneDrive\\Desktop\\PythonWeb\\venv',
+ 'C:\\Users\\trion\\OneDrive\\Desktop\\PythonWeb\\venv\\lib\\site-packages']
+Server time:	Thu, 18 Mar 2021 00:31:43 +0000
+
+증상: 북마크 등록시 발생 한 오류 
+원인 및 해결: 북마크 urls.py 파일 에서 
+path('', views.BookmarkLV.as_view(), name='index'), 를 
+path('', views.BookmarkLV.as_view, name='index'), 로 씀 
+
+
+
+2. 홈페이지에서 북마크 변경을 위해 Change -> bookmark를 누른 경우 나타난 오류 
+
+Page not found (404)
+Request Method:	GET
+Request URL:	http://127.0.0.1:8000/blog/%7B%25%20url%20'bookmark:change
+
+Using the URLconf defined in mysite.urls, Django tried these URL patterns, in this order:
+
+admin/
+accounts/
+accounts/register/ [name='register']
+accounts/register/done/ [name='register_done']
+[name='home']
+bookmark/
+blog/ [name='index']
+blog/ post/ [name='post_list']
+blog/ ^post/(?P<slug>[-\w]+)/$ [name='post_detail']
+blog/ archive/ [name='post_archive']
+blog/ archive/<int:year>/ [name='post_year_archive']
+blog/ archive/<int:year>/<str:month>/ [name='post_month_archive']
+blog/ archive/<int:year>/<str:month>/<int:day>/ [name='post_day_archive']
+blog/ archive/today/ [name='post_today_archive']
+blog/ tag/ [name='tag_cloud']
+blog/ tag/<str:tag>/ [name='tagged_object_list']
+blog/ search/ [name='search']
+blog/ add/ [name='add']
+blog/ change/ [name='change']
+blog/ <int:pk>/update/ [name='update']
+blog/ <int:pk>/delete/ [name='delete']
+photo/
+^media/(?P<path>.*)$
+The current path, blog/{% url 'bookmark:change, didn't match any of these.
+
+원인:          <a class="dropdown-item" href="{% url 'bookmark:change'">Bookmark</a>
+              <a class="dropdown-item" href="{% url 'blog:change' ">Post</a>
+
+base.html의 문법 오류 
+
+해결
+          <a class="dropdown-item" href="{% url 'bookmark:change' %}">Bookmark</a>
+              <a class="dropdown-item" href="{% url 'blog:change' %}">Post</a>
+
+
+
+3. 체인지 -> 북마크 리스트에서 삭제 버튼 눌렀을때 나타난 오류
+
+AttributeError at /bookmark/5/delete/
+type object 'object' has no attribute 'owner'
+Request Method:	GET
+Request URL:	http://127.0.0.1:8000/bookmark/5/delete/
+Django Version:	3.1.7
+Exception Type:	AttributeError
+Exception Value:	
+type object 'object' has no attribute 'owner'
+Exception Location:	C:\Users\trion\OneDrive\Desktop\PythonWeb\mysite\mysite\views.py, line 30, in dispatch
+Python Executable:	C:\Users\trion\OneDrive\Desktop\PythonWeb\venv\Scripts\python.exe
+Python Version:	3.9.2
+Python Path:	
+['C:\\Users\\trion\\OneDrive\\Desktop\\PythonWeb\\mysite',
+ 'C:\\Users\\trion\\OneDrive\\Desktop\\PythonWeb',
+ 'C:\\Users\\trion\\AppData\\Local\\Programs\\Python\\Python39\\python39.zip',
+ 'C:\\Users\\trion\\AppData\\Local\\Programs\\Python\\Python39\\DLLs',
+ 'C:\\Users\\trion\\AppData\\Local\\Programs\\Python\\Python39\\lib',
+ 'C:\\Users\\trion\\AppData\\Local\\Programs\\Python\\Python39',
+ 'C:\\Users\\trion\\OneDrive\\Desktop\\PythonWeb\\venv',
+ 'C:\\Users\\trion\\OneDrive\\Desktop\\PythonWeb\\venv\\lib\\site-packages']
+Server time:	Thu, 18 Mar 2021 01:02:58 +0000
+
+
+
+원인: 
+mysite\view.py 에서 
+
+class OwnerOnlyMixin(AccessMixin):
+    raise_exception = True
+    permission_denied_message = "Owner only can update/delete the object"
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if request.user != object.owner:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
+를 이걸로 고침 
+
+class OwnerOnlyMixin(AccessMixin):
+    raise_exception = True
+    permission_denied_message = "Owner only can update/delete the object"
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if request.user != obj.owner:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)

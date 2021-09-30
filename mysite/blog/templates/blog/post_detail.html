@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}post_detail.html{% endblock %}
+
+<!-- DISQUS Style -->
+{% block extra-style %}
+<style>
+.post-body {
+    width: 80%;
+    margin: auto;
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 16px;
+}
+</style>
+{% endblock extra-style %}
+
+
+
+{% block content %}
+<div class="post-body">
+
+    <h2> {{object.title }} </h2>
+
+    <p>
+
+        {% if object.get_next %}
+        <a href="{{ object.get_next.get_absolute_url }}" title="View Previous post">
+            <i class="fas fa-arrow-circle-left"></i> {{ object.get_next }}
+        </a>
+        {% endif %}
+
+
+        {% if object.get_previous %}
+        | <a href="{{ object.get_previous.get_absolute_url }}" title="View Next post">
+        {{ object.get_previous }} <i class="fas fa-arrow-circle-right"></i>
+        </a>
+        {% endif %}
+        &nbsp;&nbsp;&nbsp;
+    </p>
+
+    <p>
+        {{ object.modify_dt|date:"j F Y" }}
+    </p>
+    <br>
+
+
+    <div>
+        {{ object.content|linebreaks }}
+    </div>
+    <br>
+
+<!-- TAG Function -->
+    <div>
+        <b>TAGS</b> <i class="fas fa-tag"></i>
+        <!-- loading taggit_template -->
+
+        {% load taggit_templatetags2_tags %}
+        {% get_tags_for_object object as "tags" %} <!-- extract a tags' list at object -->
+        {% for tag in tags %}
+        <a href="{% url 'blog:tagged_object_list' tag.name%}">{{tag.name}}</a>
+        {% endfor %}
+        &emsp;
+        <a href="{% url 'blog:tag_cloud' %}"> <span class="btn btn-info btn-sm">TagCloud</span></a>
+    </div>
+
+
+    <!--Disqus -->
+    <br>
+    <div id="disqus_thread"></div>
+
+{% endblock %}
+
+{% block extra-script %}
+<script>
+
+    var disqus_config = function () {
+        this.page.identifier = '{{ disqus_id }}';
+        this.page.url = '{{ disqus_url }}';
+        this.page.title = '{{ disqus_title }}';
+    };
+
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://{{ disqus_short }}.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+</div>
+{% endblock %}
