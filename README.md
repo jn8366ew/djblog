@@ -2,7 +2,9 @@
 
 ## Description 
 * A personal blog implemented by Django
+* Implemented on May/10/2021
 * Referred [Django를 활용한 쉽고 빠른 웹 개발 파이썬 웹 프로그래밍 개정판](https://www.hanbit.co.kr/store/books/look.php?p_code=B7258193046)
+
 
 ## Main requirements 
 - asgiref==3.4.1
