@@ -22,28 +22,23 @@
 
 ### 1.Main page 
 
-</br>
+![main](https://user-images.githubusercontent.com/80245390/135553123-62c55299-6a13-482d-9cf7-8f8e52c39a80.JPG)
+<br>
 
-### 2.Sign in
+### 2.List posting
 
-</br>
+![list_post](https://user-images.githubusercontent.com/80245390/135553132-8b6e22b4-79b2-4cc9-8cf7-f489e7591a00.JPG)
+<br>
 
-### 3.Login
+### 3.Create posting
 
-</br>
+![post_create](https://user-images.githubusercontent.com/80245390/135553128-ab2a1c1f-6ae3-45b3-9c49-e03026e3388f.JPG)
+<br>
 
-### 4.List posting
+### 4.Retrieve posting detail
 
-</br>
+![post_detail](https://user-images.githubusercontent.com/80245390/135553335-659fdf13-77e8-4dab-9e1f-7bfc92f2fafe.JPG)
+<br>
 
-### 5.Create posting
-
-</br>
-
-### 6.Retrieve posting
-
-</br>
-
-
-
-
+### 5. Archieve 
+![archieve](https://user-images.githubusercontent.com/80245390/135553345-55c62bbb-89fc-4d99-970a-8b8d3e90e728.JPG)
