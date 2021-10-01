@@ -1,4 +1,4 @@
-# Django blog, 현재 작성중입니다. 
+# Django blog
 
 ## Description 
 * A personal blog implemented by Django
